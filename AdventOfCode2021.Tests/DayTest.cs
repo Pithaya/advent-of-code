@@ -56,6 +56,46 @@ namespace AdventOfCode2021.Tests
         }
 
         [TestMethod]
+        public void Assert_DaySix_Results()
+        {
+            var day = new DaySix();
+            AssertDayPartOneResult(day, "5934");
+            AssertDayPartTwoResult(day, "26984457539");
+        }
+
+        [TestMethod]
+        public void Assert_DaySeven_Results()
+        {
+            var day = new DaySeven();
+            AssertDayPartOneResult(day, "37");
+            AssertDayPartTwoResult(day, "168");
+        }
+
+        [TestMethod]
+        public void Assert_DayEight_Results()
+        {
+            var day = new DayEight();
+            AssertDayPartOneResult(day, "26");
+            AssertDayPartTwoResult(day, "61229");
+        }
+
+        [TestMethod]
+        public void Assert_DayNine_Results()
+        {
+            var day = new DayNine();
+            AssertDayPartOneResult(day, "15");
+            AssertDayPartTwoResult(day, "1134");
+        }
+
+        [TestMethod]
+        public void Assert_DayTen_Results()
+        {
+            var day = new DayTen();
+            AssertDayPartOneResult(day, "26397");
+            AssertDayPartTwoResult(day, "288957");
+        }
+
+        [TestMethod]
         public void Assert_DayEleven_Results()
         {
             var day = new DayEleven();
