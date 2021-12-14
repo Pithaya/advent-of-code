@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.y2021
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2021
 {
     public class Day4 : Day
     {
@@ -124,14 +126,10 @@
         }
     }
 
-    public class Board
+    public class Board : Grid<BoardCell>
     {
-        private readonly BoardCell[,] cells;
-
-        public Board(int rowIndex, int columnIndex)
-        {
-            cells = new BoardCell[rowIndex, columnIndex];
-        }
+        public Board(int rowIndex, int columnIndex) : base(rowIndex, columnIndex)
+        {}
 
         public bool IsWinning()
         {
@@ -164,20 +162,6 @@
             return GetColumn(columnIndex).All(cell => cell.Marked);
         }
 
-        public BoardCell[] GetColumn(int columnIndex)
-        {
-            return Enumerable.Range(0, cells.GetLength(0))
-                    .Select(x => cells[x, columnIndex])
-                    .ToArray();
-        }
-
-        public BoardCell[] GetRow(int rowIndex)
-        {
-            return Enumerable.Range(0, cells.GetLength(1))
-                    .Select(x => cells[rowIndex, x])
-                    .ToArray();
-        }
-
         public void Mark(int value)
         {
             for(var rowId = 0; rowId < cells.GetLength(0); rowId++)
@@ -201,24 +185,6 @@
             }
 
             return sum * finalValue;
-        }
-
-        public BoardCell this[int i, int y]
-        {
-            get { return cells[i, y]; }
-            set { cells[i, y] = value; }
-        }
-
-        public BoardCell[] this[int i]
-        {
-            get { return GetRow(i); }
-            set 
-            {
-                for(int index = 0; index < value.Length; index++)
-                {
-                    cells[i, index] = value[index];
-                }
-            }
         }
     }
 
