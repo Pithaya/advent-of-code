@@ -1,11 +1,12 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode.y2021
 {
-    public class DayFive : BaseDay
+    public class Day5 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DayFive), file);
+        public Day5(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             List<Line> lines = new List<Line>();
 
             foreach(string s in input)
@@ -68,10 +69,8 @@
             return points.Count(p => p.Value > 1).ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DayFive), file);
-
             List<Line> lines = new List<Line>();
 
             foreach (string s in input)

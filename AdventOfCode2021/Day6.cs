@@ -1,11 +1,12 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode.y2021
 {
-    public class DaySix : BaseDay
+    public class Day6 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DaySix), file);
+        public Day6(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             List<Fish> fishes = input
                 .First()
                 .Split(",")
@@ -32,10 +33,8 @@
             return fishes.Count.ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DaySix), file);
-
             Dictionary<int, FishBag> fishesByTimer = input
                .First()
                .Split(",")

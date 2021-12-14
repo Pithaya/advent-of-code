@@ -1,24 +1,25 @@
+using AdventOfCode;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AdventOfCode2021.Tests
+namespace AdventOfCode.y2021.Tests
 {
     [TestClass]
     public class DayTest
     {
-        private void AssertDayPartOneResult(BaseDay day, string expectedResult)
+        private void AssertDayPartOneResult(Day day, string expectedResult)
         {
-            Assert.AreEqual(expectedResult, day.ExecutePartOne("example"));
+            Assert.AreEqual(expectedResult, day.PartOne());
         }
 
-        private void AssertDayPartTwoResult(BaseDay day, string expectedResult)
+        private void AssertDayPartTwoResult(Day day, string expectedResult)
         {
-            Assert.AreEqual(expectedResult, day.ExecutePartTwo("example"));
+            Assert.AreEqual(expectedResult, day.PartTwo());
         }
 
         [TestMethod]
         public void Assert_DayOne_Results()
         {
-            var day = new DayOne();
+            var day = new Day1("inputs");
             AssertDayPartOneResult(day, "7");
             AssertDayPartTwoResult(day, "5");
         }
@@ -26,7 +27,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayTwo_Results()
         {
-            var day = new DayTwo();
+            var day = new Day2("inputs");
             AssertDayPartOneResult(day, "150");
             AssertDayPartTwoResult(day, "900");
         }
@@ -34,7 +35,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayThree_Results()
         {
-            var day = new DayThree();
+            var day = new Day3("inputs");
             AssertDayPartOneResult(day, "198");
             AssertDayPartTwoResult(day, "230");
         }
@@ -42,7 +43,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayFour_Results()
         {
-            var day = new DayFour();
+            var day = new Day4("inputs");
             AssertDayPartOneResult(day, "4512");
             AssertDayPartTwoResult(day, "1924");
         }
@@ -50,7 +51,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayFive_Results()
         {
-            var day = new DayFive();
+            var day = new Day5("inputs");
             AssertDayPartOneResult(day, "5");
             AssertDayPartTwoResult(day, "12");
         }
@@ -58,7 +59,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DaySix_Results()
         {
-            var day = new DaySix();
+            var day = new Day6("inputs");
             AssertDayPartOneResult(day, "5934");
             AssertDayPartTwoResult(day, "26984457539");
         }
@@ -66,7 +67,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DaySeven_Results()
         {
-            var day = new DaySeven();
+            var day = new Day7("inputs");
             AssertDayPartOneResult(day, "37");
             AssertDayPartTwoResult(day, "168");
         }
@@ -74,7 +75,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayEight_Results()
         {
-            var day = new DayEight();
+            var day = new Day8("inputs");
             AssertDayPartOneResult(day, "26");
             AssertDayPartTwoResult(day, "61229");
         }
@@ -82,7 +83,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayNine_Results()
         {
-            var day = new DayNine();
+            var day = new Day9("inputs");
             AssertDayPartOneResult(day, "15");
             AssertDayPartTwoResult(day, "1134");
         }
@@ -90,7 +91,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayTen_Results()
         {
-            var day = new DayTen();
+            var day = new Day10("inputs");
             AssertDayPartOneResult(day, "26397");
             AssertDayPartTwoResult(day, "288957");
         }
@@ -98,7 +99,7 @@ namespace AdventOfCode2021.Tests
         [TestMethod]
         public void Assert_DayEleven_Results()
         {
-            var day = new DayEleven();
+            var day = new Day11("inputs");
             AssertDayPartOneResult(day, "");
             AssertDayPartTwoResult(day, "");
         }

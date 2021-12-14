@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Linq;
 
-namespace AdventOfCode2021
+namespace AdventOfCode.y2021
 {
-    public class DayThree : BaseDay
+    public class Day3 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DayThree), file);
+        public Day3(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             int length = input.First().Length;
             BitArray gammaRate = new BitArray(length);
             BitArray epsilonRate = new BitArray(length);
@@ -41,10 +42,8 @@ namespace AdventOfCode2021
             return (epsilonRateInt.First() * gammaRateInt.First()).ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DayThree), file);
-
             int length = input.First().Length;
             BitArray oxygenGeneratorRating = null!;
             BitArray co2ScrubberRating = null!;

@@ -1,13 +1,14 @@
 ﻿using System.Text;
 
-namespace AdventOfCode2021
+namespace AdventOfCode.y2021
 {
-    public class DayEight : BaseDay
+    public class Day8 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DayEight), file);
+        public Day8(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             List<List<string>> outputValues = input
                 .Select(i => i
                     .Split(" | ")
@@ -25,10 +26,8 @@ namespace AdventOfCode2021
             return count.ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DayEight), file);
-
             var total = 0;
 
             foreach(var line in input)

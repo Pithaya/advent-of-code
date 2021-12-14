@@ -1,13 +1,14 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2021
+namespace AdventOfCode.y2021
 {
-    public class DayTen : BaseDay
+    public class Day10 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DayTen), file);
+        public Day10(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             Dictionary<char, int> scores = new Dictionary<char, int>()
             {
                 { ')', 3 },
@@ -42,10 +43,8 @@ namespace AdventOfCode2021
             return score.ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DayTen), file);
-
             Dictionary<char, ulong> scores = new Dictionary<char, ulong>()
             {
                 { ')', 1 },

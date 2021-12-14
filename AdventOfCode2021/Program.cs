@@ -1,10 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using AdventOfCode2021;
+using AdventOfCode.y2021;
 
-var inputFileName = "input";
-var currentDay = new DayEleven();
+var inputFolderName = "inputs";
+var currentDay = new Day1(inputFolderName);
 
-Console.WriteLine($"Part one: {currentDay.ExecutePartOne(inputFileName)}");
-Console.WriteLine($"Part two: {currentDay.ExecutePartTwo(inputFileName)}");
+currentDay.PartOne();
+currentDay.PartTwo();
 
 Console.ReadLine();

@@ -1,11 +1,12 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode.y2021
 {
-    public class DayNine : BaseDay
+    public class Day9 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DayNine), file);
+        public Day9(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             Heightmap heightmap = new Heightmap(input);
 
             return heightmap.GetLowPointsValues()
@@ -14,10 +15,8 @@
                 .ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DayNine), file);
-
             Heightmap heightmap = new Heightmap(input);
 
             return heightmap.GetBasinSizes()

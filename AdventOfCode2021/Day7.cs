@@ -1,11 +1,12 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode.y2021
 {
-    public class DaySeven : BaseDay
+    public class Day7 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DaySeven), file);
+        public Day7(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             List<int> crabPositions = input
                 .First()
                 .Split(",")
@@ -21,10 +22,8 @@
             return totalFuel.ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DaySeven), file);
-
             List<int> crabPositions = input
                 .First()
                 .Split(",")

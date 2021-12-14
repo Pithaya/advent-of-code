@@ -1,17 +1,20 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode.y2021
 {
-    public class DayTwo : BaseDay
+    public class Day2 : Day
     {
-        public override string ExecutePartOne(string file)
+        public Day2(string inputFolder) : base(inputFolder)
+        { }
+
+        protected override string ExecutePartOne(IEnumerable<string> input)
         {
-            IEnumerable<(string Command, int Amount)> input = ReadLines(nameof(DayTwo), file)
+            IEnumerable<(string Command, int Amount)> commands = input
                 .Select(s => s.Split(" "))
                 .Select(s => (Command: s[0], Amount: int.Parse(s[1])));
 
             int horizontalPosition = 0;
             int depth = 0;
 
-            foreach(var command in input)
+            foreach(var command in commands)
             {
                 switch (command.Command)
                 {
@@ -30,9 +33,9 @@
             return (horizontalPosition * depth).ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<(string Command, int Amount)> input = ReadLines(nameof(DayTwo), file)
+            IEnumerable<(string Command, int Amount)> commands = input
                 .Select(s => s.Split(" "))
                 .Select(s => (Command: s[0], Amount: int.Parse(s[1])));
 
@@ -40,7 +43,7 @@
             int depth = 0;
             int aim = 0;
 
-            foreach (var command in input)
+            foreach (var command in commands)
             {
                 switch (command.Command)
                 {

@@ -1,14 +1,19 @@
-﻿namespace AdventOfCode2021
+﻿using AdventOfCode;
+
+namespace AdventOfCode.y2021
 {
-    public class DayOne : BaseDay
+    public class Day1 : Day
     {
-        public override string ExecutePartOne(string file)
+        public Day1(string inputFolder) : base(inputFolder)
+        {}
+
+        protected override string ExecutePartOne(IEnumerable<string> input)
         {
-            IEnumerable<int> input = ReadLines(nameof(DayOne), file).Select(s => int.Parse(s));
+            IEnumerable<int> values = input.Select(s => int.Parse(s));
 
             int previous = int.MaxValue;
             int increases = 0;
-            foreach(int i in input)
+            foreach(int i in values)
             {
                 if(i > previous)
                 {
@@ -21,15 +26,15 @@
             return increases.ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            int[] input = ReadLines(nameof(DayOne), file).Select(s => int.Parse(s)).ToArray();
+            int[] values = input.Select(s => int.Parse(s)).ToArray();
 
             int previous = int.MaxValue;
             int increases = 0;
-            for(int i = 0; i < input.Length - 2; i++)
+            for(int i = 0; i < values.Length - 2; i++)
             {
-                int currentWindow = input[i] + input[i + 1] + input[i + 2];
+                int currentWindow = values[i] + values[i + 1] + values[i + 2];
                 if (currentWindow > previous)
                 {
                     increases++;

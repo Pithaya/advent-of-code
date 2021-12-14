@@ -1,11 +1,12 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode.y2021
 {
-    public class DayFour : BaseDay
+    public class Day4 : Day
     {
-        public override string ExecutePartOne(string file)
-        {
-            IEnumerable<string> input = ReadLines(nameof(DayFour), file);
+        public Day4(string inputFolder) : base(inputFolder)
+        { }
 
+        protected override string ExecutePartOne(IEnumerable<string> input)
+        {
             List<int> bingoNumbers = input
                 .First()
                 .Split(",")
@@ -41,10 +42,8 @@
             return winningBoard.CalculateScore(finalValue).ToString();
         }
 
-        public override string ExecutePartTwo(string file)
+        protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            IEnumerable<string> input = ReadLines(nameof(DayFour), file);
-
             List<int> bingoNumbers = input
                 .First()
                 .Split(",")
