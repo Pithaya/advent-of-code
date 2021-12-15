@@ -17,7 +17,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayOne_Results()
+        public void Assert_Day1_Results()
         {
             var day = new Day1("inputs");
             AssertDayPartOneResult(day, "7");
@@ -25,7 +25,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayTwo_Results()
+        public void Assert_Day2_Results()
         {
             var day = new Day2("inputs");
             AssertDayPartOneResult(day, "150");
@@ -33,7 +33,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayThree_Results()
+        public void Assert_Day3_Results()
         {
             var day = new Day3("inputs");
             AssertDayPartOneResult(day, "198");
@@ -41,7 +41,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayFour_Results()
+        public void Assert_Day4_Results()
         {
             var day = new Day4("inputs");
             AssertDayPartOneResult(day, "4512");
@@ -49,7 +49,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayFive_Results()
+        public void Assert_Day5_Results()
         {
             var day = new Day5("inputs");
             AssertDayPartOneResult(day, "5");
@@ -57,7 +57,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DaySix_Results()
+        public void Assert_Day6_Results()
         {
             var day = new Day6("inputs");
             AssertDayPartOneResult(day, "5934");
@@ -65,7 +65,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DaySeven_Results()
+        public void Assert_Day7_Results()
         {
             var day = new Day7("inputs");
             AssertDayPartOneResult(day, "37");
@@ -73,7 +73,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayEight_Results()
+        public void Assert_Day8_Results()
         {
             var day = new Day8("inputs");
             AssertDayPartOneResult(day, "26");
@@ -81,7 +81,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayNine_Results()
+        public void Assert_Day9_Results()
         {
             var day = new Day9("inputs");
             AssertDayPartOneResult(day, "15");
@@ -89,7 +89,7 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayTen_Results()
+        public void Assert_Day10_Results()
         {
             var day = new Day10("inputs");
             AssertDayPartOneResult(day, "26397");
@@ -97,11 +97,19 @@ namespace AdventOfCode.y2021.Tests
         }
 
         [TestMethod]
-        public void Assert_DayEleven_Results()
+        public void Assert_Day11_Results()
         {
             var day = new Day11("inputs");
-            AssertDayPartOneResult(day, "");
-            AssertDayPartTwoResult(day, "");
+            AssertDayPartOneResult(day, "1656");
+            AssertDayPartTwoResult(day, "195");
+        }
+
+        [TestMethod]
+        public void Assert_Day12_Results()
+        {
+            var day = new Day12("inputs");
+            AssertDayPartOneResult(day, "226");
+            AssertDayPartTwoResult(day, "3509");
         }
     }
 }

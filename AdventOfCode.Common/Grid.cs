@@ -10,6 +10,8 @@ namespace AdventOfCode.Common
     {
         protected readonly T[,] cells;
 
+        public T[,] Cells { get => cells; }
+
         public Grid(int rowIndex, int columnIndex)
         {
             cells = new T[rowIndex, columnIndex];
