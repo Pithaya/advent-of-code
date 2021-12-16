@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.y2021
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2021
 {
     public class Day5 : Day
     {
@@ -172,17 +174,6 @@
         public override string ToString()
         {
             return $"({Start.X}, {Start.Y}) -> ({End.X}, {End.Y})";
-        }
-    }
-
-    public record struct Point
-    {
-        public int X;
-        public int Y;
-
-        public override string ToString()
-        {
-            return $"({X}, {Y})";
         }
     }
 }
