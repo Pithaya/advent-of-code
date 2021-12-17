@@ -45,16 +45,18 @@ namespace AdventOfCode.Common
             Dictionary<Point, (bool Visited, int Distance)> points = edges.Keys.ToDictionary(k => k, k => (false, int.MaxValue));
 
             points[start] = (true, 0);
-            return VisitNode(start, points, end);
-        }
 
-        private int VisitNode(Point currentNode, Dictionary<Point, (bool Visited, int Distance)> points, Point endNode)
-        {
-            if(currentNode == endNode)
+            var currentNode = start;
+            while(currentNode != end)
             {
-                return points[endNode].Distance;
+                currentNode = VisitNode(currentNode, points);
             }
 
+            return points[end].Distance;
+        }
+
+        private Point VisitNode(Point currentNode, Dictionary<Point, (bool Visited, int Distance)> points)
+        {
             var unvisitedNeighbors = edges[currentNode].Where(e => !points[e.Key].Visited).ToList();
 
             foreach(var edge in unvisitedNeighbors)
@@ -71,7 +73,7 @@ namespace AdventOfCode.Common
             points[currentNode] = (true, points[currentNode].Distance);
 
             var nextNode = points.Where(p => !p.Value.Visited).MinBy(e => e.Value.Distance).Key;
-            return VisitNode(nextNode, points, endNode);
+            return nextNode;
         }
 
         private class Edge
