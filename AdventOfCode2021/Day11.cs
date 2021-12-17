@@ -107,21 +107,18 @@ namespace AdventOfCode.y2021
 
         private void FlashAdjacentCells(int rowIndex, int columnIndex)
         {
-            for(int i = Math.Clamp(rowIndex - 1, 0, cells.GetLength(0)); i < Math.Clamp(rowIndex + 2, 0, cells.GetLength(0)); i++)
+            foreach(var point in this.GetAdjacentCellsCoordinates(rowIndex, columnIndex))
             {
-                for (int y = Math.Clamp(columnIndex - 1, 0, cells.GetLength(1)); y < Math.Clamp(columnIndex + 2, 0, cells.GetLength(1)); y++)
+                if (cells[point.X, point.Y] != 0)
                 {
-                    if(cells[i, y] != 0)
-                    {
-                        cells[i, y]++;
-                    }
+                    cells[point.X, point.Y]++;
+                }
 
-                    if (cells[i, y] > 9)
-                    {
-                        cells[i, y] = 0;
-                        Flashes++;
-                        FlashAdjacentCells(i, y);
-                    }
+                if (cells[point.X, point.Y] > 9)
+                {
+                    cells[point.X, point.Y] = 0;
+                    Flashes++;
+                    FlashAdjacentCells(point.X, point.Y);
                 }
             }
         }
