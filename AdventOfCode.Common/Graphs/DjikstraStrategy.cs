@@ -11,38 +11,27 @@
 
         public int GetShortestPath(Point start, Point end)
         {
-            Dictionary<Point, (bool Visited, int Distance)> points = edges.Keys.ToDictionary(k => k, k => (false, int.MaxValue));
+            Dictionary<Point, int> points = edges.Keys.ToDictionary(k => k, k => k == start ? 0 : int.MaxValue);
+            PriorityQueue<Point, int> queue = new PriorityQueue<Point, int>(edges.Keys.Select(k => (k, k == start ? 0 : int.MaxValue)));
 
-            points[start] = (true, 0);
-
-            var currentNode = start;
-            while (currentNode != end)
+            while(queue.Count > 0)
             {
-                currentNode = VisitNode(currentNode, points);
-            }
+                var currentPoint = queue.Dequeue();
+                var pointEdges = edges[currentPoint];
 
-            return points[end].Distance;
-        }
-
-        private Point VisitNode(Point currentNode, Dictionary<Point, (bool Visited, int Distance)> points)
-        {
-            var unvisitedNeighbors = edges[currentNode].Where(e => !points[e.Key].Visited).ToList();
-
-            foreach (var edge in unvisitedNeighbors)
-            {
-                // Compute new distance
-                var distance = points[currentNode].Distance + edge.Value;
-                if (distance < points[edge.Key].Distance)
+                foreach(var adjacentEdge in pointEdges)
                 {
-                    points[edge.Key] = (false, distance);
+                    var destination = adjacentEdge.Key;
+                    var newDistance = adjacentEdge.Value + points[currentPoint];
+                    if(newDistance < points[destination])
+                    {
+                        points[destination] = newDistance;
+                        queue.Enqueue(destination, newDistance);
+                    }
                 }
             }
 
-            // Mark as visited
-            points[currentNode] = (true, points[currentNode].Distance);
-
-            var nextNode = points.Where(p => !p.Value.Visited).MinBy(e => e.Value.Distance).Key;
-            return nextNode;
+            return points[end];
         }
     }
 }
