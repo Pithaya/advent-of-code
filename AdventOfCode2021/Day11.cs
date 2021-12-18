@@ -22,6 +22,7 @@ namespace AdventOfCode.y2021
 
             for (int i = 0; i < 100; i++)
             {
+                var result = grid.Print();
                 grid.DoStep();
             }
 
@@ -49,11 +50,11 @@ namespace AdventOfCode.y2021
 
                 bool allZeroes = true;
 
-                for (int rowIndex = 0; rowIndex < grid.Cells.GetLength(0); rowIndex++)
+                for (int rowIndex = 0; rowIndex < grid.RowLength; rowIndex++)
                 {
-                    for (int columnIndex = 0; columnIndex < grid.Cells.GetLength(0); columnIndex++)
+                    for (int columnIndex = 0; columnIndex < grid.ColumnLength; columnIndex++)
                     {
-                        if(grid.Cells[rowIndex, columnIndex] != 0)
+                        if(grid[rowIndex, columnIndex] != 0)
                         {
                             allZeroes = false;
                         }
@@ -70,7 +71,7 @@ namespace AdventOfCode.y2021
         }
     }
 
-    class OctopusGrid : Grid<int>
+    class OctopusGrid : SimpleGrid<int>
     {
         public int Flashes { get; set; } = 0;
 
@@ -82,18 +83,18 @@ namespace AdventOfCode.y2021
         public void DoStep()
         {
             // Increase all energy by 1
-            for (int rowIndex = 0; rowIndex < cells.GetLength(0); rowIndex++)
+            for (int rowIndex = 0; rowIndex < RowLength; rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < cells.GetLength(0); columnIndex++)
+                for (int columnIndex = 0; columnIndex < ColumnLength; columnIndex++)
                 {
                     cells[rowIndex, columnIndex]++;
                 }
             }
 
             // Flash
-            for (int rowIndex = 0; rowIndex < cells.GetLength(0); rowIndex++)
+            for (int rowIndex = 0; rowIndex < RowLength; rowIndex++)
             {
-                for (int columnIndex = 0; columnIndex < cells.GetLength(0); columnIndex++)
+                for (int columnIndex = 0; columnIndex < ColumnLength; columnIndex++)
                 {
                     if(cells[rowIndex, columnIndex] > 9)
                     {

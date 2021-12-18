@@ -139,7 +139,7 @@ namespace AdventOfCode.y2021.Tests
         {
             var day = new Day15("inputs");
             AssertDayPartOneResult(day, "40");
-            AssertDayPartTwoResult(day, "");
+            AssertDayPartTwoResult(day, "315");
         }
     }
 }

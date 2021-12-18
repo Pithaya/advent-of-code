@@ -126,7 +126,7 @@ namespace AdventOfCode.y2021
         }
     }
 
-    public class Board : Grid<BoardCell>
+    public class Board : SimpleGrid<BoardCell>
     {
         public Board(int rowIndex, int columnIndex) : base(rowIndex, columnIndex)
         {}
