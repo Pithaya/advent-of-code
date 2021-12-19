@@ -42,7 +42,34 @@ namespace AdventOfCode.y2021
 
         protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            return string.Empty;
+            Dictionary<char, string> hexToBinary = new Dictionary<char, string>()
+            {
+                { '0', "0000" },
+                { '1', "0001" },
+                { '2', "0010" },
+                { '3', "0011" },
+                { '4', "0100" },
+                { '5', "0101" },
+                { '6', "0110" },
+                { '7', "0111" },
+                { '8', "1000" },
+                { '9', "1001" },
+                { 'A', "1010" },
+                { 'B', "1011" },
+                { 'C', "1100" },
+                { 'D', "1101" },
+                { 'E', "1110" },
+                { 'F', "1111" },
+            };
+
+            var packet = input.First();
+            var binaryPacket = string.Join(string.Empty, packet
+                .ToCharArray()
+                .Select(c => hexToBinary[c])
+                .ToList());
+
+            var rootPacket = Packet.CreatePacket(binaryPacket);
+            return rootPacket.Value.ToString();
         }
     }
 
@@ -50,8 +77,19 @@ namespace AdventOfCode.y2021
     {
         public int Version { get; init; }
         public int TypeId { get; init; }
+
+        /// <summary>
+        /// Packet length in bits
+        /// </summary>
         public abstract int PacketLength { get; }
         public abstract int VersionSum { get; }
+        public abstract long Value { get; }
+
+        public Packet(int version, int typeId)
+        {
+            this.Version = version;
+            this.TypeId = typeId;
+        }
 
         public static Packet CreatePacket(string packet)
         {
@@ -60,19 +98,11 @@ namespace AdventOfCode.y2021
 
             if (type == 4)
             {
-                return new LiteralPacket(packet[6..])
-                {
-                    Version = version,
-                    TypeId = type
-                };
+                return new LiteralPacket(packet[6..], version, type);
             }
             else
             {
-                return new OperatorPacket(packet[6..])
-                {
-                    Version = version,
-                    TypeId = type
-                };
+                return new OperatorPacket(packet[6..], version, type);
             }
             
         }
@@ -82,12 +112,13 @@ namespace AdventOfCode.y2021
     {
         private int valueLength;
 
-        public long Value { get; }
+        private long value;
 
         public override int PacketLength => valueLength;
         public override int VersionSum => Version;
+        public override long Value => value;
 
-        public LiteralPacket(string packet)
+        public LiteralPacket(string packet, int version, int typeId) : base(version, typeId)
         {
             var sb = new StringBuilder();
             var currentIndex = 0;
@@ -111,26 +142,42 @@ namespace AdventOfCode.y2021
                 valueLength += 5;
             }
 
-            Value = Convert.ToInt64(sb.ToString(), 2);
+            value = Convert.ToInt64(sb.ToString(), 2);
         }
     }
 
     class OperatorPacket : Packet
     {
-        private int packetLength;
+        private int outerPacketLength;
         private List<Packet> subPackets = new List<Packet>();
 
-        public override int PacketLength => packetLength + subPackets.Sum(s => s.PacketLength);
+        public override int PacketLength => outerPacketLength + subPackets.Sum(s => s.PacketLength);
         public override int VersionSum => Version + subPackets.Sum(s => s.VersionSum);
+        public override long Value
+        {
+            get
+            {
+                return TypeId switch
+                {
+                    0 => subPackets.Sum(s => s.Value),
+                    1 => subPackets.Select(s => s.Value).Aggregate((p, s) => p * s),
+                    2 => subPackets.Min(s => s.Value),
+                    3 => subPackets.Max(s => s.Value),
+                    5 => subPackets.First().Value > subPackets.Last().Value ? 1 : 0,
+                    6 => subPackets.First().Value < subPackets.Last().Value ? 1 : 0,
+                    7 => subPackets.First().Value == subPackets.Last().Value ? 1 : 0,
+                };
+            }
+        }
 
-        public OperatorPacket(string packet)
+        public OperatorPacket(string packet, int version, int typeId) : base(version, typeId)
         {
             int subPacketsLength = 0;
             int subPacketsCount = 0;
             int processedLength = 0;
             int processedSubPackets = 0;
 
-            packetLength = 7;
+            outerPacketLength = 7;
 
             bool IsFinished()
             {
@@ -151,7 +198,7 @@ namespace AdventOfCode.y2021
                 Index endIndex = currentIndex + 16;
                 subPacketsLength = Convert.ToInt32(packet[startIndex..endIndex], 2);
                 currentIndex += 16;
-                packetLength += 15;
+                outerPacketLength += 15;
             }
             else
             {
@@ -159,7 +206,7 @@ namespace AdventOfCode.y2021
                 Index endIndex = currentIndex + 12;
                 subPacketsCount = Convert.ToInt32(packet[startIndex..endIndex], 2);
                 currentIndex += 12;
-                packetLength += 11;
+                outerPacketLength += 11;
             }
 
             while (!IsFinished())
