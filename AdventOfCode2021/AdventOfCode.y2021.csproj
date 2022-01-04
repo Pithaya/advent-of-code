@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PCRE.NET" Version="0.18.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AdventOfCode.Common\AdventOfCode.Common.csproj" />
   </ItemGroup>
 
@@ -31,6 +35,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="inputs\day12.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="inputs\day18.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="inputs\day2.txt">
