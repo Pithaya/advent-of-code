@@ -35,7 +35,37 @@ namespace AdventOfCode.y2021
 
         protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            return string.Empty;
+            int largestMagnitude = 0;
+
+            foreach (var firstLine in input.ToList())
+            {
+                foreach (var secondLine in input.ToList())
+                {
+                    if(firstLine == secondLine)
+                    {
+                        continue;
+                    }
+
+                    var result = new SnailFishNumber
+                    {
+                        Parent = null,
+                        First = SnailFishNumber.Parse(firstLine),
+                        Second = SnailFishNumber.Parse(secondLine)
+                    };
+
+                    result.First.Parent = result;
+                    result.Second.Parent = result;
+
+                    Reduce(result);
+
+                    if(result.Magnitude > largestMagnitude)
+                    {
+                        largestMagnitude = result.Magnitude;
+                    }
+                }
+            }
+
+            return largestMagnitude.ToString();
         }
 
         private void Reduce(SnailFishNumber number)
