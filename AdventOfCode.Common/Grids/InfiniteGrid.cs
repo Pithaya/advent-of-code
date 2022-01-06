@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode.Common
 {
+    /// <summary>
+    /// An infinitely repeating grid.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class InfiniteGrid<T> :  Grid<T>
     {
         public override int RowLength => cells.GetLength(0) * repeat;

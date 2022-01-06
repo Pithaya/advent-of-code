@@ -116,7 +116,6 @@ namespace AdventOfCode.Common
             return Math.Clamp(y, 0, ColumnLength - 1);
         }
 
-
         public bool IsLastCell(Point point)
         {
             return IsLastCell(point.X, point.Y);

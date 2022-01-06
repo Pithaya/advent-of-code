@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode.Common
 {
+    /// <summary>
+    /// A simple grid with a fixed width and height.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SimpleGrid<T> : Grid<T>
     {
         public override int RowLength => cells.GetLength(0);
