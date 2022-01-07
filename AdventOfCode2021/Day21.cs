@@ -1,4 +1,6 @@
 ﻿using AdventOfCode;
+using AdventOfCode.Common;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 
 namespace AdventOfCode.y2021
@@ -6,7 +8,7 @@ namespace AdventOfCode.y2021
     public class Day21 : Day
     {
         public Day21(string inputFolder) : base(inputFolder)
-        {}
+        { }
 
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
@@ -54,7 +56,7 @@ namespace AdventOfCode.y2021
                     {
                         newSpace %= 10;
 
-                        if(newSpace == 0)
+                        if (newSpace == 0)
                         {
                             newSpace = 10;
                         }
@@ -77,122 +79,163 @@ namespace AdventOfCode.y2021
 
         protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            ulong playerOneWins = 0;
-            ulong playerTwoWins = 0;
-
-            Dictionary<Universe, ulong> universes = new Dictionary<Universe, ulong>()
+            Dictionary<Universe, ulong> universes = new Dictionary<Universe, ulong>();
+            universes.Add(new Universe()
             {
-                {  
-                    new Universe()
-                    {
-                        FirstPlayedLast = false,
-                        FirstPlayer = new PlayerState
-                        {
-                            Score = 0,
-                            CurrentSpace = Convert.ToInt32(input
+                IsFirstPlaying = true,
+                FirstPlayer = new PlayerState
+                {
+                    Score = 0,
+                    CurrentSpace = Convert.ToInt32(input
                                 .First()
                                 .Split(": ")
                                 .Last())
-                        },
-                        SecondPlayer = new PlayerState
-                        {
-                            Score = 0,
-                            CurrentSpace = Convert.ToInt32(input
+                },
+                SecondPlayer = new PlayerState
+                {
+                    Score = 0,
+                    CurrentSpace = Convert.ToInt32(input
                                 .Last()
                                 .Split(": ")
                                 .Last())
-                        },
-                    }, 
-                    1
-                }
-            };
+                },
+            }, 1);
 
-            Dictionary<(PlayerState state, int roll), PlayerState> stateCache = new Dictionary<(PlayerState state, int roll), PlayerState>();
+            // Universe state -> new universes for all rolls
+            Dictionary<Universe, Dictionary<Universe, ulong>> stateCache = new Dictionary<Universe, Dictionary<Universe, ulong>>();
 
-            while (universes.Any())
+            // Roll value -> number of universes to spawn
+            Dictionary<int, ulong> possibleRolls = new Dictionary<int, ulong>();
+            for (int roll1 = 1; roll1 < 4; roll1++)
             {
-                var currentUniverse = universes.First();
-                universes.Remove(currentUniverse.Key);
-
-                var currentPlayer = currentUniverse.Key.FirstPlayedLast ? currentUniverse.Key.SecondPlayer : currentUniverse.Key.FirstPlayer;
-
-                // Roll the dice three times, and generate new possibilities every time
-                for(int roll1 = 1; roll1 < 4; roll1++)
+                for (int roll2 = 1; roll2 < 4; roll2++)
                 {
-                    for (int roll2 = 1; roll2 < 4; roll2++)
+                    for (int roll3 = 1; roll3 < 4; roll3++)
                     {
-                        for (int roll3 = 1; roll3 < 4; roll3++)
+                        var roll = roll1 + roll2 + roll3;
+                        possibleRolls.AddOrUpdate<int, ulong>(roll, 1, (r, v) => v + 1);
+                    }
+                }
+            }
+
+            ulong playerOneWins = 0;
+            ulong playerTwoWins = 0;
+
+            // Fill cache
+            for(int playerOneScore = 0; playerOneScore < 22; playerOneScore++)
+            {
+                for (int playerTwoScore = 0; playerTwoScore < 22; playerTwoScore++)
+                {
+                    for (int playerOneSpace = 1; playerOneSpace < 11; playerOneSpace++)
+                    {
+                        for (int playerTwoSpace = 1; playerTwoSpace < 11; playerTwoSpace++)
                         {
-                            var roll = roll1 + roll2 + roll3;
-                            PlayerState updatedPlayer;
+                            var currentUniverse = new Universe()
+                            {
+                                IsFirstPlaying = true,
+                                FirstPlayer = new PlayerState
+                                {
+                                    Score = playerOneScore,
+                                    CurrentSpace = playerOneSpace
+                                },
+                                SecondPlayer = new PlayerState
+                                {
+                                    Score = playerTwoScore,
+                                    CurrentSpace = playerTwoSpace
+                                },
+                            };
 
-                            if(stateCache.ContainsKey((currentPlayer, roll)))
+                            var currentUniverse2 = new Universe()
                             {
-                                updatedPlayer = stateCache[(currentPlayer, roll)];
-                            }
-                            else
-                            {
-                                updatedPlayer = CreateUpdatedPlayer(currentPlayer, roll);
-                                stateCache.Add((currentPlayer, roll), updatedPlayer);
-                            }
+                                IsFirstPlaying = false,
+                                FirstPlayer = new PlayerState
+                                {
+                                    Score = playerOneScore,
+                                    CurrentSpace = playerOneSpace
+                                },
+                                SecondPlayer = new PlayerState
+                                {
+                                    Score = playerTwoScore,
+                                    CurrentSpace = playerTwoSpace
+                                },
+                            };
 
-                            if (updatedPlayer.Score >= 21)
-                            {
-                                if (!currentUniverse.Key.FirstPlayedLast)
-                                {
-                                    playerOneWins += currentUniverse.Value;
-                                    Debug.WriteLine(playerOneWins);
-                                }
-                                else
-                                {
-                                    playerTwoWins += currentUniverse.Value;
-                                }
-                            }
-                            else
-                            {
-                                var newUniverse = new Universe()
-                                {
-                                    FirstPlayedLast = !currentUniverse.Key.FirstPlayedLast,
-                                    FirstPlayer = !currentUniverse.Key.FirstPlayedLast ? updatedPlayer : currentUniverse.Key.FirstPlayer,
-                                    SecondPlayer = currentUniverse.Key.FirstPlayedLast ? updatedPlayer : currentUniverse.Key.SecondPlayer,
-                                };
-
-                                if (universes.ContainsKey(newUniverse))
-                                {
-                                    universes[newUniverse] += currentUniverse.Value;
-                                }
-                                else
-                                {
-                                    universes.Add(newUniverse, currentUniverse.Value);
-                                }
-                            }
+                            stateCache.Add(currentUniverse, CreateChildUniverses(currentUniverse, possibleRolls));
+                            stateCache.Add(currentUniverse2, CreateChildUniverses(currentUniverse2, possibleRolls));
                         }
                     }
                 }
             }
 
+            var test = GetWins(universes.First().Key, stateCache, possibleRolls);
+
             return Math.Max(playerOneWins, playerTwoWins).ToString();
         }
 
-        private PlayerState CreateUpdatedPlayer(PlayerState player, int roll)
+        private (ulong FirstPlayerWin, ulong SecondPlayerWin) GetWins(Universe currentUniverse, Dictionary<Universe, Dictionary<Universe, ulong>> stateCache, Dictionary<int, ulong> possibleRolls)
         {
-            var newSpace = player.CurrentSpace + roll;
-
-            if (newSpace > 10)
+            if (currentUniverse.IsFirstPlayerWinning)
             {
-                newSpace %= 10;
-
-                if (newSpace == 0)
-                {
-                    newSpace = 10;
-                }
+                return (1, 0);
+            }
+            else if (currentUniverse.IsSecondPlayerWinning)
+            {
+                return (0, 1);
             }
 
-            return new PlayerState()
+            (ulong FirstPlayerWin, ulong SecondPlayerWin) childResults = (0, 0);
+            Dictionary<Universe, ulong> children = stateCache[currentUniverse];
+            foreach(var child in children)
             {
-                CurrentSpace = newSpace,
-                Score = player.Score + newSpace
-            };
+                var childWins = GetWins(child.Key, stateCache, possibleRolls);
+                childResults.FirstPlayerWin += childWins.FirstPlayerWin * child.Value;
+                childResults.SecondPlayerWin += childWins.SecondPlayerWin * child.Value;
+            }
+
+            return childResults;
+        }
+
+        private Dictionary<Universe, ulong> CreateChildUniverses(Universe universe, Dictionary<int, ulong> possibleRolls)
+        {
+            var result = new Dictionary<Universe, ulong>();
+
+            if(universe.IsFirstPlayerWinning || universe.IsSecondPlayerWinning)
+            {
+                // No children
+                return result;
+            }
+
+            foreach (var roll in possibleRolls)
+            {
+                var currentPlayer = universe.CurrentPlayer;
+
+                var newSpace = currentPlayer.CurrentSpace + roll.Key;
+
+                if (newSpace > 10)
+                {
+                    newSpace %= 10;
+
+                    if (newSpace == 0)
+                    {
+                        newSpace = 10;
+                    }
+                }
+
+                var updatedPlayer = new PlayerState()
+                {
+                    CurrentSpace = newSpace,
+                    Score = currentPlayer.Score + newSpace
+                };
+
+                result.Add(new Universe()
+                {
+                    IsFirstPlaying = !universe.IsFirstPlaying,
+                    FirstPlayer = universe.IsFirstPlaying ? updatedPlayer : universe.FirstPlayer,
+                    SecondPlayer = universe.IsFirstPlaying ? universe.SecondPlayer : updatedPlayer,
+                }, roll.Value);
+            }
+
+            return result;
         }
 
         class Player
@@ -231,9 +274,15 @@ namespace AdventOfCode.y2021
 
         struct Universe
         {
-            public bool FirstPlayedLast { get; set; }
+            public bool IsFirstPlaying { get; set; }
             public PlayerState FirstPlayer { get; set; }
             public PlayerState SecondPlayer { get; set; }
+
+            public PlayerState CurrentPlayer => IsFirstPlaying ? FirstPlayer : SecondPlayer;
+            public PlayerState LastPlayer => IsFirstPlaying ? SecondPlayer : FirstPlayer;
+
+            public bool IsFirstPlayerWinning => FirstPlayer.Score >= 21;
+            public bool IsSecondPlayerWinning => SecondPlayer.Score >= 21;
         }
     }
 }

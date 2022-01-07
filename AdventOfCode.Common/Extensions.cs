@@ -15,5 +15,27 @@ namespace AdventOfCode.Common
                 set.Add(e);
             }
         }
+
+        public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dic, TKey key, Func<TKey, TValue> valueFactory)
+        {
+            if (!dic.ContainsKey(key))
+            {
+                dic.Add(key, valueFactory(key));
+            }
+
+            return dic[key];
+        }
+
+        public static void AddOrUpdate<TKey, TValue>(this Dictionary<TKey, TValue> dic, TKey key, TValue addValue, Func<TKey, TValue, TValue> updateValueFactory)
+        {
+            if (!dic.ContainsKey(key))
+            {
+                dic.Add(key, addValue);
+            }
+            else
+            {
+                dic[key] = updateValueFactory(key, dic[key]);
+            }
+        }
     }
 }
