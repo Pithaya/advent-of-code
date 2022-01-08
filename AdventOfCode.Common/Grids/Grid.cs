@@ -141,5 +141,16 @@ namespace AdventOfCode.Common
 
             return sb.ToString();
         }
+
+        public void Fill(T value)
+        {
+            for (int rowIndex = 0; rowIndex < RowLength; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < ColumnLength; columnIndex++)
+                {
+                    this[rowIndex, columnIndex] = value;
+                }
+            }
+        }
     }
 }
