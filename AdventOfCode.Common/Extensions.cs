@@ -38,6 +38,11 @@ namespace AdventOfCode.Common
             }
         }
 
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> e)
+        {
+            return (IEnumerable<T>)e.Where(x => x != null);
+        }
+
         public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> enumerable)
         {
             return enumerable.Select((item, index) => (item, index));
