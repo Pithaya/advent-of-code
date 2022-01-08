@@ -12,28 +12,24 @@ namespace AdventOfCode.y2021
 
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
-            var playerOne = new Player
-            {
-                CurrentSpace = Convert.ToInt32(input
-                    .First()
-                    .Split(": ")
-                    .Last()),
-                Score = 0
-            };
+            var firstPlayer = new Player(
+              Convert.ToInt32(input
+                      .First()
+                      .Split(": ")
+                      .Last()),
+              0, true);
 
-            var playerTwo = new Player
-            {
-                CurrentSpace = Convert.ToInt32(input
-                   .Last()
-                   .Split(": ")
-                   .Last()),
-                Score = 0
-            };
+            var secondPlayer = new Player(
+               Convert.ToInt32(input
+                       .Last()
+                       .Split(": ")
+                       .Last()),
+               0, false);
 
             var players = new List<Player>()
             {
-                playerOne,
-                playerTwo
+                firstPlayer,
+                secondPlayer
             };
 
             var dice = new DeterministicDice();
@@ -79,30 +75,19 @@ namespace AdventOfCode.y2021
 
         protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            Dictionary<Universe, ulong> universes = new Dictionary<Universe, ulong>();
-            universes.Add(new Universe()
-            {
-                IsFirstPlaying = true,
-                FirstPlayer = new PlayerState
-                {
-                    Score = 0,
-                    CurrentSpace = Convert.ToInt32(input
-                                .First()
-                                .Split(": ")
-                                .Last())
-                },
-                SecondPlayer = new PlayerState
-                {
-                    Score = 0,
-                    CurrentSpace = Convert.ToInt32(input
-                                .Last()
-                                .Split(": ")
-                                .Last())
-                },
-            }, 1);
+            var firstPlayer = new Player(
+                Convert.ToInt32(input
+                        .First()
+                        .Split(": ")
+                        .Last()),
+                0, true);
 
-            // Universe state -> new universes for all rolls
-            Dictionary<Universe, Dictionary<Universe, ulong>> stateCache = new Dictionary<Universe, Dictionary<Universe, ulong>>();
+            var secondPlayer = new Player(
+               Convert.ToInt32(input
+                       .Last()
+                       .Split(": ")
+                       .Last()),
+               0, false);
 
             // Roll value -> number of universes to spawn
             Dictionary<int, ulong> possibleRolls = new Dictionary<int, ulong>();
@@ -118,136 +103,64 @@ namespace AdventOfCode.y2021
                 }
             }
 
-            ulong playerOneWins = 0;
-            ulong playerTwoWins = 0;
+            var wins = GetWins(firstPlayer, secondPlayer, possibleRolls);
 
-            // Fill cache
-            for(int playerOneScore = 0; playerOneScore < 22; playerOneScore++)
-            {
-                for (int playerTwoScore = 0; playerTwoScore < 22; playerTwoScore++)
-                {
-                    for (int playerOneSpace = 1; playerOneSpace < 11; playerOneSpace++)
-                    {
-                        for (int playerTwoSpace = 1; playerTwoSpace < 11; playerTwoSpace++)
-                        {
-                            var currentUniverse = new Universe()
-                            {
-                                IsFirstPlaying = true,
-                                FirstPlayer = new PlayerState
-                                {
-                                    Score = playerOneScore,
-                                    CurrentSpace = playerOneSpace
-                                },
-                                SecondPlayer = new PlayerState
-                                {
-                                    Score = playerTwoScore,
-                                    CurrentSpace = playerTwoSpace
-                                },
-                            };
-
-                            var currentUniverse2 = new Universe()
-                            {
-                                IsFirstPlaying = false,
-                                FirstPlayer = new PlayerState
-                                {
-                                    Score = playerOneScore,
-                                    CurrentSpace = playerOneSpace
-                                },
-                                SecondPlayer = new PlayerState
-                                {
-                                    Score = playerTwoScore,
-                                    CurrentSpace = playerTwoSpace
-                                },
-                            };
-
-                            stateCache.Add(currentUniverse, CreateChildUniverses(currentUniverse, possibleRolls));
-                            stateCache.Add(currentUniverse2, CreateChildUniverses(currentUniverse2, possibleRolls));
-                        }
-                    }
-                }
-            }
-
-            var test = GetWins(universes.First().Key, stateCache, possibleRolls);
-
-            return Math.Max(playerOneWins, playerTwoWins).ToString();
+            return Math.Max(wins.FirstPlayerWin, wins.SecondPlayerWin).ToString();
         }
 
-        private (ulong FirstPlayerWin, ulong SecondPlayerWin) GetWins(Universe currentUniverse, Dictionary<Universe, Dictionary<Universe, ulong>> stateCache, Dictionary<int, ulong> possibleRolls)
+        private (ulong FirstPlayerWin, ulong SecondPlayerWin) GetWins(Player currentPlayer, Player otherPlayer, Dictionary<int, ulong> possibleRolls)
         {
-            if (currentUniverse.IsFirstPlayerWinning)
-            {
-                return (1, 0);
-            }
-            else if (currentUniverse.IsSecondPlayerWinning)
-            {
-                return (0, 1);
-            }
-
             (ulong FirstPlayerWin, ulong SecondPlayerWin) childResults = (0, 0);
-            Dictionary<Universe, ulong> children = stateCache[currentUniverse];
-            foreach(var child in children)
+
+            foreach (var possibleRoll in possibleRolls)
             {
-                var childWins = GetWins(child.Key, stateCache, possibleRolls);
-                childResults.FirstPlayerWin += childWins.FirstPlayerWin * child.Value;
-                childResults.SecondPlayerWin += childWins.SecondPlayerWin * child.Value;
+                var updatedPlayer = GetUpdatedPlayer(currentPlayer, possibleRoll.Key);
+
+                if (updatedPlayer.IsWinning)
+                {
+                    (ulong, ulong) win = updatedPlayer.IsFirst ? ((ulong)1, (ulong)0) : (0, 1);
+                    childResults.FirstPlayerWin += win.Item1 * possibleRoll.Value;
+                    childResults.SecondPlayerWin += win.Item2 * possibleRoll.Value;
+                }
+                else
+                {
+                    var childWins = GetWins(otherPlayer, updatedPlayer, possibleRolls);
+                    childResults.FirstPlayerWin += childWins.FirstPlayerWin * possibleRoll.Value;
+                    childResults.SecondPlayerWin += childWins.SecondPlayerWin * possibleRoll.Value;
+                }
             }
 
             return childResults;
         }
 
-        private Dictionary<Universe, ulong> CreateChildUniverses(Universe universe, Dictionary<int, ulong> possibleRolls)
+        private Player GetUpdatedPlayer(Player player, int roll)
         {
-            var result = new Dictionary<Universe, ulong>();
+            var newSpace = (player.CurrentSpace + roll) % 10;
 
-            if(universe.IsFirstPlayerWinning || universe.IsSecondPlayerWinning)
+            if (newSpace == 0)
             {
-                // No children
-                return result;
+                newSpace = 10;
             }
 
-            foreach (var roll in possibleRolls)
-            {
-                var currentPlayer = universe.CurrentPlayer;
-
-                var newSpace = currentPlayer.CurrentSpace + roll.Key;
-
-                if (newSpace > 10)
-                {
-                    newSpace %= 10;
-
-                    if (newSpace == 0)
-                    {
-                        newSpace = 10;
-                    }
-                }
-
-                var updatedPlayer = new PlayerState()
-                {
-                    CurrentSpace = newSpace,
-                    Score = currentPlayer.Score + newSpace
-                };
-
-                result.Add(new Universe()
-                {
-                    IsFirstPlaying = !universe.IsFirstPlaying,
-                    FirstPlayer = universe.IsFirstPlaying ? updatedPlayer : universe.FirstPlayer,
-                    SecondPlayer = universe.IsFirstPlaying ? universe.SecondPlayer : updatedPlayer,
-                }, roll.Value);
-            }
-
-            return result;
+            return new Player(newSpace, player.Score + newSpace, player.IsFirst);
         }
 
         class Player
         {
-            public int Score { get; set; }
-            public int CurrentSpace { get; set; }
-        }
+            const int winningScore = 21;
 
-        struct PlayerState
-        {
+            public bool IsFirst { get; set; }
             public int Score { get; set; }
             public int CurrentSpace { get; set; }
+
+            public bool IsWinning => Score >= winningScore;
+
+            public Player(int currentSpace, int score, bool isFirst)
+            {
+                Score = score;
+                CurrentSpace = currentSpace;
+                IsFirst = isFirst;
+            }
         }
 
         abstract class Dice
@@ -270,19 +183,6 @@ namespace AdventOfCode.y2021
 
                 return value;
             }
-        }
-
-        struct Universe
-        {
-            public bool IsFirstPlaying { get; set; }
-            public PlayerState FirstPlayer { get; set; }
-            public PlayerState SecondPlayer { get; set; }
-
-            public PlayerState CurrentPlayer => IsFirstPlaying ? FirstPlayer : SecondPlayer;
-            public PlayerState LastPlayer => IsFirstPlaying ? SecondPlayer : FirstPlayer;
-
-            public bool IsFirstPlayerWinning => FirstPlayer.Score >= 21;
-            public bool IsSecondPlayerWinning => SecondPlayer.Score >= 21;
         }
     }
 }
