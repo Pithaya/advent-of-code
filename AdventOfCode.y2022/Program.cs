@@ -1,7 +1,7 @@
 ﻿using AdventOfCode.y2022;
 
 var inputFolderName = "inputs";
-var currentDay = new Day1(inputFolderName);
+var currentDay = new Day2(inputFolderName);
 
 currentDay.PartOne();
 currentDay.PartTwo();
