@@ -36,5 +36,13 @@ namespace AdventOfCode.y2022.Tests
             AssertDayPartOneResult(day, "157");
             AssertDayPartTwoResult(day, "70");
         }
+
+        [TestMethod]
+        public void Assert_Day4_Results()
+        {
+            var day = new Day4("inputs");
+            AssertDayPartOneResult(day, "2");
+            AssertDayPartTwoResult(day, "4");
+        }
     }
 }
