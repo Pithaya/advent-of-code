@@ -52,5 +52,165 @@ namespace AdventOfCode.y2022.Tests
             AssertDayPartOneResult(day, "CMZ");
             AssertDayPartTwoResult(day, "MCD");
         }
+
+        [TestMethod]
+        public void Assert_Day6_Results()
+        {
+            var day = new Day6("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day7_Results()
+        {
+            var day = new Day7("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day8_Results()
+        {
+            var day = new Day8("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day9_Results()
+        {
+            var day = new Day9("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day10_Results()
+        {
+            var day = new Day10("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day11_Results()
+        {
+            var day = new Day11("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day12_Results()
+        {
+            var day = new Day12("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day13_Results()
+        {
+            var day = new Day13("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day14_Results()
+        {
+            var day = new Day14("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day15_Results()
+        {
+            var day = new Day15("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day16_Results()
+        {
+            var day = new Day16("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day17_Results()
+        {
+            var day = new Day17("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day18_Results()
+        {
+            var day = new Day18("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day19_Results()
+        {
+            var day = new Day19("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day20_Results()
+        {
+            var day = new Day20("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day21_Results()
+        {
+            var day = new Day21("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day22_Results()
+        {
+            var day = new Day22("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day23_Results()
+        {
+            var day = new Day23("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day24_Results()
+        {
+            var day = new Day24("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
+
+        [TestMethod]
+        public void Assert_Day25_Results()
+        {
+            var day = new Day25("inputs");
+            AssertDayPartOneResult(day, "");
+            AssertDayPartTwoResult(day, "");
+        }
     }
 }
