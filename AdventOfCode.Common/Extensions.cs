@@ -42,5 +42,15 @@ namespace AdventOfCode.Common
         {
             return enumerable.Select((item, index) => (item, index));
         }
+
+        public static ulong Sum(this IEnumerable<ulong> enumerable)
+        {
+            if (!enumerable.Any())
+            {
+                return 0;
+            }
+
+            return enumerable.Aggregate((acc, cur) => acc + cur);
+        }
     }
 }
