@@ -1,19 +1,21 @@
 ﻿using System.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdventOfCode.y2022
 {
     class Item
     {
-        public int WorryLevel { get; set; }
+        public long WorryLevel { get; set; }
     }
 
     class Monkey
     {
         public List<Item> StartingItems { get; set; } = new List<Item>();
-        public Func<int, int> InspectionOperation { get; set; }
-        public Func<int, int> DecideThrow { get; set; }
+        public Func<long, long> InspectionOperation { get; set; }
+        public Func<long, int> DecideThrow { get; set; }
 
-        public int InspectedItems { get; set; } = 0;
+        public long DivisionValue { get; set; }
+        public long InspectedItems { get; set; } = 0;
     }
 
     public class Day11 : Day
@@ -80,6 +82,8 @@ namespace AdventOfCode.y2022
                     int trueMonkey = int.Parse(input.ElementAt(i + 1).Split("throw to monkey ").Last());
                     int falseMonkey = int.Parse(input.ElementAt(i + 2).Split("throw to monkey ").Last());
 
+                    currentMonkey.DivisionValue = division;
+
                     currentMonkey.DecideThrow = (val) => val % division == 0 ? trueMonkey : falseMonkey;
 
                     i += 3;
@@ -111,7 +115,7 @@ namespace AdventOfCode.y2022
                         monkey.InspectedItems++;
 
                         // Divide
-                        item.WorryLevel = (int)Math.Round(item.WorryLevel / (decimal)3, MidpointRounding.ToZero);
+                        item.WorryLevel = (long)Math.Round(item.WorryLevel / (decimal)3, MidpointRounding.ToZero);
 
                         // Throw
                         int targetMonkey = monkey.DecideThrow(item.WorryLevel);
@@ -128,7 +132,36 @@ namespace AdventOfCode.y2022
 
         protected override string ExecutePartTwo(IEnumerable<string> input)
         {
-            return string.Empty;
+            List<Monkey> monkeys = ParseMonkeys(input);
+            long totalModulo = monkeys.Select(m => m.DivisionValue).Aggregate((agg, curr) => agg * curr);
+            int rounds = 10000;
+
+            for (int i = 0; i < rounds; i++)
+            {
+                foreach (var monkey in monkeys)
+                {
+                    List<Item> itemsToRemove = new List<Item>();
+
+                    foreach (var item in monkey.StartingItems)
+                    {
+                        // Inspect
+                        item.WorryLevel = monkey.InspectionOperation(item.WorryLevel);
+                        monkey.InspectedItems++;
+
+                        // Divide
+                        item.WorryLevel = item.WorryLevel % totalModulo;
+
+                        // Throw
+                        int targetMonkey = monkey.DecideThrow(item.WorryLevel);
+                        monkeys.ElementAt(targetMonkey).StartingItems.Add(item);
+                        itemsToRemove.Add(item);
+                    }
+
+                    itemsToRemove.ForEach(item => monkey.StartingItems.Remove(item));
+                }
+            }
+
+            return monkeys.Select(m => m.InspectedItems).OrderByDescending(i => i).Take(2).Aggregate((agg, curr) => agg * curr).ToString();
         }
     }
 }
