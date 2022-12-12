@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode.Common.Graphs.Unweighted;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,30 @@ namespace AdventOfCode.Common
             {
                 SetRow(i, value);
             }
+        }
+
+        public UnweightedGraph ToUnweightedGraph(Func<T, T, bool> canTraverse)
+        {
+            UnweightedGraph graph = new UnweightedGraph(UnweightedShortestPathStrategy.BFS, true);
+
+            for(int rowIndex = 0; rowIndex < this.RowLength; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < this.ColumnLength; columnIndex++)
+                {
+                    Point current = new Point(rowIndex, columnIndex);
+                    IEnumerable<Point> neighbours = GetAdjacentCellsCoordinates(current, false);
+
+                    foreach(Point neighbor in neighbours)
+                    {
+                        if (canTraverse(this[current], this[neighbor]))
+                        {
+                            graph.AddEdge(current, neighbor);
+                        }
+                    }
+                }
+            }
+
+            return graph;
         }
     }
 }

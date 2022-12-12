@@ -9,9 +9,9 @@ namespace AdventOfCode.Common
     public class WeightedGraph : IShortestPathStrategy
     {
         private readonly Dictionary<Point, Dictionary<Point, int>> edges = new Dictionary<Point, Dictionary<Point, int>>();
-        private readonly ShortestPathStrategy shortestPathStrategy;
+        private readonly WeightedShortestPathStrategy shortestPathStrategy;
 
-        public WeightedGraph(ShortestPathStrategy strategy)
+        public WeightedGraph(WeightedShortestPathStrategy strategy)
         {
             this.shortestPathStrategy = strategy;
         }
@@ -50,7 +50,7 @@ namespace AdventOfCode.Common
         {
             IShortestPathStrategy strategy = shortestPathStrategy switch
             {
-                ShortestPathStrategy.Djikstra => new DjikstraStrategy(edges),
+                WeightedShortestPathStrategy.Djikstra => new DjikstraStrategy(edges),
             };
 
             return strategy.GetShortestPath(start, end);

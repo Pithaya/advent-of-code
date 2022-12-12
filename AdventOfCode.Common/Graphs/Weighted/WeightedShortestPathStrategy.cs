@@ -1,8 +1,8 @@
 ﻿namespace AdventOfCode.Common
 {
-    public enum ShortestPathStrategy
+    public enum WeightedShortestPathStrategy
     {
         Djikstra,
-        AStar
+        // AStar
     }
 }
