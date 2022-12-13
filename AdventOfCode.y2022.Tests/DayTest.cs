@@ -123,7 +123,7 @@ namespace AdventOfCode.y2022.Tests
         {
             var day = new Day13("inputs");
             AssertDayPartOneResult(day, "13");
-            AssertDayPartTwoResult(day, "");
+            AssertDayPartTwoResult(day, "140");
         }
 
         [TestMethod]
