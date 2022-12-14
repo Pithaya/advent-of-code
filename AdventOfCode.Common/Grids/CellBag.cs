@@ -37,7 +37,7 @@ namespace AdventOfCode.Common.Grids
             }
             set
             {
-                if (cells.ContainsKey(p))
+                if (!cells.ContainsKey(p))
                 {
                     cells.Add(p, value);
                 }
@@ -113,6 +113,29 @@ namespace AdventOfCode.Common.Grids
                 for (var columnIndex = minY - padding; columnIndex <= maxY + padding; columnIndex++)
                 {
                     sb.Append(transform(this[rowIndex, columnIndex]));
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
+        public string Print(Func<Point, char> transform, int padding = 1)
+        {
+            var sb = new StringBuilder();
+
+            var minX = cells.Keys.MinBy(p => p.X).X;
+            var maxX = cells.Keys.MaxBy(p => p.X).X;
+
+            var minY = cells.Keys.MinBy(p => p.Y).Y;
+            var maxY = cells.Keys.MaxBy(p => p.Y).Y;
+
+            for (var rowIndex = minX - padding; rowIndex <= maxX + padding; rowIndex++)
+            {
+                for (var columnIndex = minY - padding; columnIndex <= maxY + padding; columnIndex++)
+                {
+                    sb.Append(transform(new Point(rowIndex, columnIndex)));
                 }
 
                 sb.AppendLine();
