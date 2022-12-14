@@ -14,14 +14,19 @@ namespace AdventOfCode.Common.Grids
     public class CellBag<T>
     {
         protected readonly Dictionary<Point, T> cells = new Dictionary<Point, T>();
-        protected readonly T defaultValue;
+        protected readonly Func<Point, T> defaultValueBuilder;
 
         public IReadOnlyDictionary<Point, T> Cells => cells;
-        public T DefaultValue => defaultValue;
+        public Func<Point, T> DefaultValueBuilder;
 
         public CellBag(T defaultValue)
         {
-            this.defaultValue = defaultValue;
+            this.defaultValueBuilder = (p) => defaultValue;
+        }
+
+        public CellBag(Func<Point, T> defaultValueBuilder)
+        {
+            this.defaultValueBuilder = defaultValueBuilder;
         }
 
         public T this[Point p]
@@ -33,7 +38,7 @@ namespace AdventOfCode.Common.Grids
                     return cells[p];
                 }
 
-                return defaultValue;
+                return defaultValueBuilder(p);
             }
             set
             {
@@ -96,6 +101,16 @@ namespace AdventOfCode.Common.Grids
                     }
                 }
             }
+        }
+
+        public IEnumerable<KeyValuePair<Point, T>> GetRowCells(int rowIndex)
+        {
+            return Cells.Where(c => c.Key.X == rowIndex).OrderBy(c => c.Key.Y);
+        }
+
+        public IEnumerable<KeyValuePair<Point, T>> GetColumnCells(int columnIndex)
+        {
+            return Cells.Where(c => c.Key.Y == columnIndex).OrderBy(c => c.Key.X);
         }
 
         public string Print(Func<T, char> transform, int padding = 1)

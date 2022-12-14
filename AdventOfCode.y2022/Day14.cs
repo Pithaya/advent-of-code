@@ -38,6 +38,100 @@ namespace AdventOfCode.y2022
             return position;
         }
 
+
+        private Point GetFinalDestination(Point position, CellBag<char> cave, HashSet<Point> sandAtRest, int caveBottom)
+        {
+            bool couldntMove = true;
+
+            // Try to go straight down
+
+            // Get wall cells
+            List<Point> columnCells = cave.GetColumnCells(position.Y).Select(c => c.Key).ToList();
+
+            // Add bottom
+            columnCells.Add(new Point(caveBottom, position.Y));
+
+            // Add fallen sand
+            columnCells.AddRange(sandAtRest.Where(s => s.Y == position.Y));
+
+            Point nearestBelowPoint = columnCells.Where(p => p.X > position.X).OrderBy(p => p.X).First();
+
+            if (nearestBelowPoint.X != position.X + 1)
+            {
+                couldntMove = false;
+                position = new Point(nearestBelowPoint.X - 1, nearestBelowPoint.Y);
+            }
+
+            // Try to go diagonally left
+            // Go diagonally until diagonal is blocked (try to go right) or space below is empty (start over)
+
+            Point firstAvailableSpace = new Point(position.X + 1, position.Y - 1);
+
+            while (true)
+            {
+                if (IsAvailable(firstAvailableSpace, cave, sandAtRest, caveBottom))
+                {
+                    couldntMove = false;
+                    position = firstAvailableSpace;
+
+                    Point below = new Point(firstAvailableSpace.X + 1, firstAvailableSpace.Y);
+
+                    // If we can start falling below
+                    if (IsAvailable(below, cave, sandAtRest, caveBottom))
+                    {
+                        // Start over
+                        return GetFinalDestination(position, cave, sandAtRest, caveBottom);
+                    }
+
+                    firstAvailableSpace = new Point(firstAvailableSpace.X + 1, firstAvailableSpace.Y - 1);
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            // Go right
+
+            firstAvailableSpace = new Point(position.X + 1, position.Y + 1);
+
+            while (true)
+            {
+                if (IsAvailable(firstAvailableSpace, cave, sandAtRest, caveBottom))
+                {
+                    couldntMove = false;
+                    position = firstAvailableSpace;
+
+                    Point below = new Point(firstAvailableSpace.X + 1, firstAvailableSpace.Y);
+
+                    if (IsAvailable(below, cave, sandAtRest, caveBottom))
+                    {
+                        // Start over
+                        return GetFinalDestination(position, cave, sandAtRest, caveBottom);
+                    }
+
+                    firstAvailableSpace = new Point(firstAvailableSpace.X + 1, firstAvailableSpace.Y + 1);
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (couldntMove)
+            {
+                // Stuck: This is our final position
+                return position;
+            }
+            else
+            {
+                // Start over
+                return GetFinalDestination(position, cave, sandAtRest, caveBottom);
+            }
+        }
+
         private CellBag<char> CreateCave(IEnumerable<string> input)
         {
             CellBag<char> cave = new CellBag<char>('.');
@@ -118,41 +212,30 @@ namespace AdventOfCode.y2022
             int caveBottomRow = cave.Cells.Keys.Select(k => k.X).Max() + 2;
             HashSet<Point> sandAtRest = new HashSet<Point>();
 
-            Point currentSandPosition = sandSource;
-
             while (true)
             {
                 string caveState = cave.Print((Point p) =>
                 {
-                    if (sandAtRest.Contains(p) || currentSandPosition == p)
+                    if (sandAtRest.Contains(p))
                     {
                         return 'o';
+                    }
+                    else if(p.X > caveBottomRow)
+                    {
+                        return '#';
                     }
                     else
                     {
                         return cave[p];
                     }
-                });
+                }, 10);
+                
+                Point destination = GetFinalDestination(sandSource, cave, sandAtRest, caveBottomRow);
+                sandAtRest.Add(destination);
 
-                Point destination = GetDestination(currentSandPosition, cave, sandAtRest, caveBottomRow);
-
-                // Can't move
-                if (destination == currentSandPosition)
+                if (destination == sandSource)
                 {
-                    if(currentSandPosition == sandSource)
-                    {
-                        sandAtRest.Add(currentSandPosition);
-                        break;
-                    }
-
-                    // At rest
-                    sandAtRest.Add(currentSandPosition);
-                    currentSandPosition = sandSource;
-                    continue;
-                }
-                else
-                {
-                    currentSandPosition = destination;
+                    break;
                 }
             }
 
