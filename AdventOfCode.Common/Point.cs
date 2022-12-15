@@ -17,5 +17,10 @@
         }
 
         public static Point Zero => new Point(0, 0);
+
+        public static int GetManhattanDistance(Point first, Point second)
+        {
+            return Math.Abs(first.X - second.X) + Math.Abs(first.Y - second.Y);
+        }
     }
 }
