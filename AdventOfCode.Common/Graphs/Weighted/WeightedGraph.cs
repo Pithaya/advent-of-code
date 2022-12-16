@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode.Common
 {
-    public class WeightedGraph : IShortestPathStrategy
+    /// <summary>
+    /// Undirected weighted graph.
+    /// </summary>
+    public class WeightedGraph<T> : IShortestPathStrategy<T>
+        where T : IEquatable<T>
     {
-        private readonly Dictionary<Point, Dictionary<Point, int>> edges = new Dictionary<Point, Dictionary<Point, int>>();
+        private readonly Dictionary<T, Dictionary<T, int>> edges = new Dictionary<T, Dictionary<T, int>>();
         private readonly WeightedShortestPathStrategy shortestPathStrategy;
 
         public WeightedGraph(WeightedShortestPathStrategy strategy)
@@ -16,12 +20,20 @@ namespace AdventOfCode.Common
             this.shortestPathStrategy = strategy;
         }
 
-        public void AddEdge(Point start, Point end, int startWeight, int endWeight)
+        /// <summary>
+        /// Add an edge to the graph.
+        /// Start and end elements will be added to the graph if they do not yet exist.
+        /// </summary>
+        /// <param name="start">Starting element of the edge.</param>
+        /// <param name="end">End element of the edge.</param>
+        /// <param name="startWeight">Weight when travelling to start point.</param>
+        /// <param name="endWeight">Weight when travelling to end point.</param>
+        public void AddEdge(T start, T end, int startWeight, int endWeight)
         {
             // Start point
             if(!edges.ContainsKey(start))
             {
-                edges.Add(start, new Dictionary<Point, int>());
+                edges.Add(start, new Dictionary<T, int>());
             }
 
             if (!edges[start].ContainsKey(end))
@@ -32,7 +44,7 @@ namespace AdventOfCode.Common
             // End point
             if (!edges.ContainsKey(end))
             {
-                edges.Add(end, new Dictionary<Point, int>());
+                edges.Add(end, new Dictionary<T, int>());
             }
 
             if (!edges[end].ContainsKey(start))
@@ -41,25 +53,19 @@ namespace AdventOfCode.Common
             }
         }
 
-        public int GetEdge(Point start, Point end)
+        public int GetEdge(T start, T end)
         {
-            return edges[start].First(e => e.Key == end).Value;
+            return edges[start].First(e => e.Key.Equals(end)).Value;
         }
 
-        public int GetShortestPath(Point start, Point end)
+        public int GetShortestPath(T start, T end)
         {
-            IShortestPathStrategy strategy = shortestPathStrategy switch
+            IShortestPathStrategy<T> strategy = shortestPathStrategy switch
             {
-                WeightedShortestPathStrategy.Djikstra => new DjikstraStrategy(edges),
+                WeightedShortestPathStrategy.Djikstra => new DjikstraStrategy<T>(edges),
             };
 
             return strategy.GetShortestPath(start, end);
-        }
-
-        private class Edge
-        {
-            public Point End { get; set; }
-            public int Weight { get; set; }
         }
     }
 }

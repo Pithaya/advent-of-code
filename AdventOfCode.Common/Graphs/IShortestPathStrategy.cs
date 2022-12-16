@@ -1,7 +1,8 @@
 ﻿namespace AdventOfCode.Common
 {
-    interface IShortestPathStrategy
+    interface IShortestPathStrategy<T>
+        where T : IEquatable<T>
     {
-        public int GetShortestPath(Point start, Point end);
+        public int GetShortestPath(T start, T end);
     }
 }

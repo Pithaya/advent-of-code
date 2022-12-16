@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode.Common.Graphs.Unweighted
 {
-    public class UnweightedGraph : IShortestPathStrategy
+    public class UnweightedGraph : IShortestPathStrategy<Point>
     {
         private readonly Dictionary<Point, HashSet<Point>> edges = new Dictionary<Point, HashSet<Point>>();
         private readonly UnweightedShortestPathStrategy shortestPathStrategy;
@@ -48,7 +48,7 @@ namespace AdventOfCode.Common.Graphs.Unweighted
 
         public int GetShortestPath(Point start, Point end)
         {
-            IShortestPathStrategy strategy = shortestPathStrategy switch
+            IShortestPathStrategy<Point> strategy = shortestPathStrategy switch
             {
                 UnweightedShortestPathStrategy.BFS => new BFSStrategy(edges),
             };

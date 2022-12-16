@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode.Common.Graphs.Unweighted
 {
-    public class BFSStrategy : IShortestPathStrategy
+    public class BFSStrategy : IShortestPathStrategy<Point>
     {
         private readonly Dictionary<Point, HashSet<Point>> edges;
 

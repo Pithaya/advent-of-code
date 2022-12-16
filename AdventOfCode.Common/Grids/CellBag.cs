@@ -14,17 +14,19 @@ namespace AdventOfCode.Common.Grids
     public class CellBag<T>
     {
         protected readonly Dictionary<Point, T> cells = new Dictionary<Point, T>();
-        protected readonly Func<Point, T> defaultValueBuilder;
+        protected readonly Func<Point?, T> defaultValueBuilder;
 
         public IReadOnlyDictionary<Point, T> Cells => cells;
-        public Func<Point, T> DefaultValueBuilder;
+        public Func<Point?, T> DefaultValueBuilder => defaultValueBuilder;
+
+        public T DefaultValue => defaultValueBuilder(null);
 
         public CellBag(T defaultValue)
         {
-            this.defaultValueBuilder = (p) => defaultValue;
+            this.defaultValueBuilder = (_) => defaultValue;
         }
 
-        public CellBag(Func<Point, T> defaultValueBuilder)
+        public CellBag(Func<Point?, T> defaultValueBuilder)
         {
             this.defaultValueBuilder = defaultValueBuilder;
         }

@@ -21,7 +21,7 @@ namespace AdventOfCode.y2021
                     .ToArray());
             }
 
-            var caveGraph = new WeightedGraph(WeightedShortestPathStrategy.Djikstra);
+            var caveGraph = new WeightedGraph<Point>(WeightedShortestPathStrategy.Djikstra);
 
             for (int x = 0; x < cave.RowLength; x++)
             {
@@ -60,7 +60,7 @@ namespace AdventOfCode.y2021
                     .ToArray());
             }
 
-            var caveGraph = new WeightedGraph(WeightedShortestPathStrategy.Djikstra);
+            var caveGraph = new WeightedGraph<Point>(WeightedShortestPathStrategy.Djikstra);
 
             for (int x = 0; x < cave.RowLength; x++)
             {
