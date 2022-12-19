@@ -162,8 +162,8 @@ namespace AdventOfCode.y2022.Tests
         public void Assert_Day18_Results()
         {
             var day = new Day18("inputs");
-            AssertDayPartOneResult(day, "");
-            AssertDayPartTwoResult(day, "");
+            AssertDayPartOneResult(day, "64");
+            AssertDayPartTwoResult(day, "58");
         }
 
         [TestMethod]
