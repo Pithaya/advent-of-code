@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Common
 {
@@ -56,6 +52,12 @@ namespace AdventOfCode.Common
             }
 
             return enumerable.Aggregate((acc, cur) => acc + cur);
+        }
+
+        public static Group[] GetCapturingGroups(this Regex regex, string input)
+        {
+            var matches = regex.Matches(input);
+            return matches.Single().Groups.Values.Skip(1).ToArray();
         }
     }
 }
