@@ -1,14 +1,12 @@
 ﻿using AdventOfCode.Common;
-using System;
+using AdventOfCode.Common.Models;
 using System.Text;
 
 namespace AdventOfCode.y2022
 {
+    [DayNumber(9)]
     public class Day9 : Day
     {
-        public Day9(string inputFolder) : base(inputFolder)
-        { }
-
         private Vector GetDirectionFromInput(string input)
         {
             string direction = input.Split(" ").First();

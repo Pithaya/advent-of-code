@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using AdventOfCode.Common;
 using System.Text.Json.Nodes;
 
 namespace AdventOfCode.y2022
@@ -85,11 +84,9 @@ namespace AdventOfCode.y2022
         }
     }
 
+    [DayNumber(13)]
     public class Day13 : Day
     {
-        public Day13(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             int correctOrderPairsCount = 0;

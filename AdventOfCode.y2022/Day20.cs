@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using AdventOfCode.Common;
 
 namespace AdventOfCode.y2022
 {
@@ -8,11 +8,9 @@ namespace AdventOfCode.y2022
         public long Value;
     }
 
+    [DayNumber(20)]
     public class Day20 : Day
     {
-        public Day20(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             List<Number> values = input.Select((line, index) => new Number

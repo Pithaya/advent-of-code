@@ -1,13 +1,11 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
+﻿using AdventOfCode.Common;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(15)]
     public class Day15 : Day
     {
-        public Day15(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             var cave = new SimpleGrid<int>(input.Count(), input.First().Length);

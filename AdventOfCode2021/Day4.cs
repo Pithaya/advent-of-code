@@ -2,11 +2,9 @@
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(4)]
     public class Day4 : Day
     {
-        public Day4(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             List<int> bingoNumbers = input

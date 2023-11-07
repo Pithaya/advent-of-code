@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using AdventOfCode.Common;
 
 namespace AdventOfCode.y2022
 {
@@ -18,11 +17,9 @@ namespace AdventOfCode.y2022
         public long InspectedItems { get; set; } = 0;
     }
 
+    [DayNumber(11)]
     public class Day11 : Day
     {
-        public Day11(string inputFolder) : base(inputFolder)
-        { }
-
         private List<Monkey> ParseMonkeys(IEnumerable<string> input)
         {
             List<Monkey> result = new List<Monkey>();

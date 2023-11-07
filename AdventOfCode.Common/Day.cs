@@ -4,9 +4,10 @@ namespace AdventOfCode
 {
     public abstract class Day
     {
+        private const string inputFolder = "inputs";
         private readonly string filePath;
 
-        public Day(string inputFolder)
+        public Day()
         {
             var filename = GetType()
                 .ToString()

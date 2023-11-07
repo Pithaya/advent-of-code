@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.y2022
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2022
 {
     class Elf
     {
@@ -11,11 +13,9 @@
         }
     }
 
+    [DayNumber(1)]
     public class Day1 : Day
     {
-        public Day1(string inputFolder) : base(inputFolder)
-        { }
-
         private List<Elf> GetElves(IEnumerable<string> input)
         {
             List<Elf> elves = new List<Elf>();

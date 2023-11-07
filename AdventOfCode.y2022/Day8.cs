@@ -1,12 +1,11 @@
 ﻿using AdventOfCode.Common;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2022
 {
+    [DayNumber(8)]
     public class Day8 : Day
     {
-        public Day8(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             HashSet<Point> visibleTrees = new HashSet<Point>();

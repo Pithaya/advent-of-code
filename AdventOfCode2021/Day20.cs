@@ -1,15 +1,12 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
+﻿using AdventOfCode.Common;
 using AdventOfCode.Common.Grids;
-using System.Diagnostics;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(20)]
     public class Day20 : Day
     {
-        public Day20(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             bool[] algorithm = input

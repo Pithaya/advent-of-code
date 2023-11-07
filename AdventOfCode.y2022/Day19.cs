@@ -13,11 +13,9 @@ namespace AdventOfCode.y2022
         public (int Ore, int Obsidian) GeodeRobotCost { get; init; }
     }
 
+    [DayNumber(19)]
     public class Day19 : Day
     {
-        public Day19(string inputFolder) : base(inputFolder)
-        { }
-
         private Regex blueprintRegex = new Regex("Blueprint (\\d+): Each ore robot costs (\\d+) ore\\. Each clay robot costs (\\d+) ore\\. Each obsidian robot costs (\\d+) ore and (\\d+) clay\\. Each geode robot costs (\\d+) ore and (\\d+) obsidian\\.");
 
         private List<Blueprint> ParseBlueprints(IEnumerable<string> input)

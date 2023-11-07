@@ -1,10 +1,10 @@
-﻿namespace AdventOfCode.y2021
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2021
 {
+    [DayNumber(9)]
     public class Day9 : Day
     {
-        public Day9(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             Heightmap heightmap = new Heightmap(input);

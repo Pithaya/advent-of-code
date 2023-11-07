@@ -1,12 +1,11 @@
-﻿using System.Text.RegularExpressions;
+﻿using AdventOfCode.Common;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(10)]
     public class Day10 : Day
     {
-        public Day10(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             Dictionary<char, int> scores = new Dictionary<char, int>()

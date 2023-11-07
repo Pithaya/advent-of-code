@@ -1,13 +1,11 @@
-﻿using AdventOfCode;
+﻿using AdventOfCode.Common;
 using System.Text;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(16)]
     public class Day16 : Day
     {
-        public Day16(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             Dictionary<char, string> hexToBinary = new Dictionary<char, string>()

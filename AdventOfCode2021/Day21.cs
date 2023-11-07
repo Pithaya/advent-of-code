@@ -1,15 +1,10 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
-using System.Collections.Concurrent;
-using System.Diagnostics;
+﻿using AdventOfCode.Common;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(21)]
     public class Day21 : Day
     {
-        public Day21(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             var firstPlayer = new Player(

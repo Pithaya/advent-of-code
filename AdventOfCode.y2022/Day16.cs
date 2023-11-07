@@ -1,6 +1,5 @@
 ﻿using AdventOfCode.Common;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.y2022
@@ -44,11 +43,9 @@ namespace AdventOfCode.y2022
         }
     }
 
+    [DayNumber(16)]
     public class Day16 : Day
     {
-        public Day16(string inputFolder) : base(inputFolder)
-        { }
-
         private Regex inputRegex = new Regex("Valve (.+) has flow rate=(\\d+); tunnel(?:s)* lead(?:s)* to valve(?:s)* (.+,*)+");
 
         private int part2CurrentMaxFlow = 0;

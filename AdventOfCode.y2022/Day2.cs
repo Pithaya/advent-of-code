@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.y2022
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2022
 {
     enum Hand
     {
@@ -14,11 +16,9 @@
         Draw
     }
 
+    [DayNumber(2)]
     public class Day2 : Day
     {
-        public Day2(string inputFolder) : base(inputFolder)
-        { }
-
         // Elf hand -> Player hand and player result
         private Dictionary<Hand, Dictionary<Hand, PlayerResult>> outcomes = new Dictionary<Hand, Dictionary<Hand, PlayerResult>>()
         {

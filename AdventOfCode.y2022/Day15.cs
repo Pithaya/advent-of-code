@@ -1,6 +1,5 @@
 ﻿using AdventOfCode.Common;
-using AdventOfCode.Common.Grids;
-using System.Text;
+using AdventOfCode.Common.Models;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.y2022
@@ -25,11 +24,17 @@ namespace AdventOfCode.y2022
         }
     }
 
+    [DayNumber(15)]
     public class Day15 : Day
     {
         private readonly bool isTesting = false;
 
-        public Day15(string inputFolder, bool isTesting) : base(inputFolder)
+        public Day15() : base()
+        {
+            this.isTesting = false;
+        }
+
+        public Day15(bool isTesting) : base()
         {
             this.isTesting = isTesting;
         }

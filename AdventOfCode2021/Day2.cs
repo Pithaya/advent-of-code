@@ -1,10 +1,10 @@
-﻿namespace AdventOfCode.y2021
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2021
 {
+    [DayNumber(2)]
     public class Day2 : Day
     {
-        public Day2(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             IEnumerable<(string Command, int Amount)> commands = input

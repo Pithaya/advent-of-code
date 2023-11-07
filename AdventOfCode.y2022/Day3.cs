@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.y2022
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2022
 {
     class Rucksack
     {
@@ -22,16 +24,13 @@
         }
     }
 
+    [DayNumber(3)]
     public class Day3 : Day
     {
         private int GetPriority(char item)
         {
             return char.IsLower(item) ? (int)item - 96 : (int)item - 38;
         }
-
-        public Day3(string inputFolder) : base(inputFolder)
-        { }
-
 
         protected override string ExecutePartOne(IEnumerable<string> input)
         {

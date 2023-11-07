@@ -1,13 +1,11 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
+﻿using AdventOfCode.Common;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(19)]
     public class Day19 : Day
     {
-        public Day19(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             List<Scanner> scanners = new List<Scanner>();

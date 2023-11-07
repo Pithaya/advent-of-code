@@ -1,5 +1,6 @@
 ﻿using AdventOfCode.Common;
 using AdventOfCode.Common.Grids;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2022
 {
@@ -85,11 +86,9 @@ namespace AdventOfCode.y2022
         }
     }
 
+    [DayNumber(17)]
     public class Day17 : Day
     {
-        public Day17(string inputFolder) : base(inputFolder)
-        { }
-
         /// <summary>
         /// Returns the shape for the current step.
         /// The top left of the shape is at 0,0.

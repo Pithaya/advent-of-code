@@ -20,11 +20,9 @@ namespace AdventOfCode.y2022
         }
     }
 
+    [DayNumber(5)]
     public class Day5 : Day
     {
-        public Day5(string inputFolder) : base(inputFolder)
-        { }
-
         /// <summary>
         /// Returns a list of crates, each crate composed of 3 char.
         /// </summary>

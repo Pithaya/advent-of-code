@@ -1,13 +1,12 @@
 ﻿using AdventOfCode.Common;
 using AdventOfCode.Common.Graphs.Unweighted;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2022
 {
+    [DayNumber(12)]
     public class Day12 : Day
     {
-        public Day12(string inputFolder) : base(inputFolder)
-        { }
-
         private int GetHeight(char c)
         {
             return c switch

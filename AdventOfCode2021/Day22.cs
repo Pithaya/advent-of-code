@@ -1,13 +1,11 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
+﻿using AdventOfCode.Common;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(22)]
     public class Day22 : Day
     {
-        public Day22(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             Dictionary<Point3D, bool> initializedCubes = new Dictionary<Point3D, bool>();

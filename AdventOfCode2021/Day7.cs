@@ -1,10 +1,10 @@
-﻿namespace AdventOfCode.y2021
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2021
 {
+    [DayNumber(7)]
     public class Day7 : Day
     {
-        public Day7(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             List<int> crabPositions = input

@@ -2,11 +2,9 @@
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(12)]
     public class Day12 : Day
     {
-        public Day12(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             Dictionary<string, List<string>> paths = new Dictionary<string, List<string>>();

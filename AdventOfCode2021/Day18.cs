@@ -1,15 +1,11 @@
-﻿using AdventOfCode;
+﻿using AdventOfCode.Common;
 using PCRE;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(18)]
     public class Day18 : Day
     {
-        public Day18(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             var additionResult = SnailFishNumber.Parse(input.First());

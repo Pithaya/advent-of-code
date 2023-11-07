@@ -1,13 +1,11 @@
-﻿using AdventOfCode;
+﻿using AdventOfCode.Common;
 using System.Text;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(14)]
     public class Day14 : Day
     {
-        public Day14(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             var polymer = input.First();

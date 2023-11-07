@@ -1,12 +1,10 @@
-﻿using AdventOfCode;
+﻿using AdventOfCode.Common;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(24)]
     public class Day24 : Day
     {
-        public Day24(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             long modelNumber = 99999999999999;

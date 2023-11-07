@@ -39,11 +39,9 @@ namespace AdventOfCode.y2022
         }
     }
 
+    [DayNumber(7)]
     public class Day7 : Day
     {
-        public Day7(string inputFolder) : base(inputFolder)
-        { }
-
         private Directory BuildTree(IEnumerable<string> input)
         {
             Directory root = new Directory("/", null!);

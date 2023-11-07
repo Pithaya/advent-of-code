@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Linq;
+﻿using AdventOfCode.Common;
+using System.Collections;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(3)]
     public class Day3 : Day
     {
-        public Day3(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             int length = input.First().Length;

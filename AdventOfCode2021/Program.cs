@@ -1,10 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
-using AdventOfCode.y2021;
+﻿using AdventOfCode.Common;
 
-var inputFolderName = "inputs";
-var currentDay = new Day25(inputFolderName);
-
-currentDay.PartOne();
-currentDay.PartTwo();
-
-Console.ReadLine();
+DayRunner.Run();

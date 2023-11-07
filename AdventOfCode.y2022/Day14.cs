@@ -1,14 +1,12 @@
 ﻿using AdventOfCode.Common;
 using AdventOfCode.Common.Grids;
-using System.Reflection.Metadata;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2022
 {
+    [DayNumber(14)]
     public class Day14 : Day
     {
-        public Day14(string inputFolder) : base(inputFolder)
-        { }
-
         private bool IsAvailable(Point position, CellBag<char> cave, HashSet<Point> sandAtRest, int? caveBottom)
         {
             return cave[position] == '.' && !sandAtRest.Contains(position) && (caveBottom.HasValue ? position.X < caveBottom.Value : true);

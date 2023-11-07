@@ -1,9 +1,3 @@
-﻿using AdventOfCode.y2022;
+﻿using AdventOfCode.Common;
 
-var inputFolderName = "inputs";
-var currentDay = new Day20(inputFolderName);
-
-currentDay.PartOne();
-currentDay.PartTwo();
-
-Console.ReadLine();
+DayRunner.Run();

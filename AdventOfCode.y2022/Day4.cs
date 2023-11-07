@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.y2022
+﻿using AdventOfCode.Common;
+
+namespace AdventOfCode.y2022
 {
     class Pair
     {
@@ -31,11 +33,9 @@
         }
     }
 
+    [DayNumber(4)]
     public class Day4 : Day
     {
-        public Day4(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             List<Pair> pairs = input.Select(line => new Pair(line)).ToList();

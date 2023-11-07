@@ -1,13 +1,10 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
+﻿using AdventOfCode.Common;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(25)]
     public class Day25 : Day
     {
-        public Day25(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             var grid = new InfiniteGrid<char>(input.Count(), input.First().Count(), 1, (cells, point, repeatX, repeatY) => cells[point.X, point.Y]);

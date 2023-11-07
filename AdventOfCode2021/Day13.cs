@@ -1,14 +1,12 @@
-﻿using AdventOfCode;
-using AdventOfCode.Common;
+﻿using AdventOfCode.Common;
+using AdventOfCode.Common.Models;
 using System.Text;
 
 namespace AdventOfCode.y2021
 {
+    [DayNumber(13)]
     public class Day13 : Day
     {
-        public Day13(string inputFolder) : base(inputFolder)
-        {}
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             List<Point> points = new List<Point>();

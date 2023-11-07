@@ -1,14 +1,12 @@
 ﻿using AdventOfCode.Common;
 using AdventOfCode.Common.Grids;
-using System.Drawing;
+using AdventOfCode.Common.Models;
 
 namespace AdventOfCode.y2022
 {
+    [DayNumber(18)]
     public class Day18 : Day
     {
-        public Day18(string inputFolder) : base(inputFolder)
-        { }
-
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             CellBag3D<bool> points = new CellBag3D<bool>(false);

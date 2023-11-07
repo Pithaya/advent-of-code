@@ -2,11 +2,9 @@
 
 namespace AdventOfCode.y2022
 {
+    [DayNumber(6)]
     public class Day6 : Day
     {
-        public Day6(string inputFolder) : base(inputFolder)
-        { }
-     
         protected override string ExecutePartOne(IEnumerable<string> input)
         {
             string buffer = input.Single();

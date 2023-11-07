@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AdventOfCode.Common.Models;
+using System.Text;
 
 namespace AdventOfCode.Common.Grids
 {
