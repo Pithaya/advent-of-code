@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdventOfCode.Common\AdventOfCode.Common.csproj" />
+    <ProjectReference Include="..\..\common\AdventOfCode.Common\AdventOfCode.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
