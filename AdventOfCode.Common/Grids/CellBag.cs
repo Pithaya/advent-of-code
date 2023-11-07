@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace AdventOfCode.Common.Grids
 {
@@ -97,10 +93,7 @@ namespace AdventOfCode.Common.Grids
                     new Point() { X = currentPoint.X, Y = currentPoint.Y + 1 }
                 })
                 {
-                    if (point != currentPoint)
-                    {
-                        yield return point;
-                    }
+                    yield return point;
                 }
             }
         }
@@ -117,25 +110,7 @@ namespace AdventOfCode.Common.Grids
 
         public string Print(Func<T, char> transform, int padding = 1)
         {
-            var sb = new StringBuilder();
-
-            var minX = cells.Keys.MinBy(p => p.X).X;
-            var maxX = cells.Keys.MaxBy(p => p.X).X;
-
-            var minY = cells.Keys.MinBy(p => p.Y).Y;
-            var maxY = cells.Keys.MaxBy(p => p.Y).Y;
-
-            for (var rowIndex = minX - padding; rowIndex <= maxX + padding; rowIndex++)
-            {
-                for (var columnIndex = minY - padding; columnIndex <= maxY + padding; columnIndex++)
-                {
-                    sb.Append(transform(this[rowIndex, columnIndex]));
-                }
-
-                sb.AppendLine();
-            }
-
-            return sb.ToString();
+            return Print((Point p) => transform(this[p]), padding);
         }
 
         public string Print(Func<Point, char> transform, int padding = 1)
