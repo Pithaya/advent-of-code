@@ -1,3 +1,6 @@
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
+
 namespace AdventOfCode.y2023.Tests
 {
     public static class DayExtensions
@@ -16,12 +19,33 @@ namespace AdventOfCode.y2023.Tests
     [TestFixture]
     public class DayTest
     {
+        private static IFileSystem GetMockFileSystem(string input, string filename)
+        {
+            var fileSystem = new MockFileSystem();
+
+            fileSystem.AddFile(fileSystem.Path.Combine(Day.InputFolder, $"{filename}.txt"), new MockFileData(input));
+
+            return fileSystem;
+        }
+
         [Test]
         public void Assert_Day1_Results()
         {
             var day = new Day1();
-            day.AssertPartOneResult("");
-            day.AssertPartTwoResult("");
+            day.AssertPartOneResult("142");
+
+            day = new Day1(GetMockFileSystem(
+               """
+                two1nine
+                eightwothree
+                abcone2threexyz
+                xtwone3four
+                4nineeightseven2
+                zoneight234
+                7pqrstsixteen
+                """,
+               "day1"));
+            day.AssertPartTwoResult("281");
         }
 
         [Test]

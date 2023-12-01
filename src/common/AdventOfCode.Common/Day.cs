@@ -1,21 +1,25 @@
 ﻿using System.Diagnostics;
+using System.IO.Abstractions;
 
 namespace AdventOfCode
 {
     public abstract class Day
     {
-        private const string inputFolder = "inputs";
+        public const string InputFolder = "inputs";
         private readonly string filePath;
+        private readonly IFileSystem fileSystem;
 
-        public Day()
+        public Day(IFileSystem? fileSystem = null)
         {
+            this.fileSystem = fileSystem ?? new FileSystem();
+
             var filename = GetType()
                 .ToString()
                 .Split(".")
                 .Last()
                 .ToLower();
 
-            this.filePath = Path.Combine(inputFolder, $"{filename}.txt");
+            this.filePath = this.fileSystem.Path.Combine(InputFolder, $"{filename}.txt");
         }
 
         public string PartOne()
@@ -49,7 +53,7 @@ namespace AdventOfCode
 
         private IEnumerable<string> ReadLines()
         {
-            return File.ReadLines(this.filePath);
+            return fileSystem.File.ReadLines(this.filePath);
         }
     }
 }
