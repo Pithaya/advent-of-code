@@ -52,8 +52,8 @@ namespace AdventOfCode.y2023.Tests
         public void Assert_Day2_Results()
         {
             var day = new Day2();
-            day.AssertPartOneResult("");
-            day.AssertPartTwoResult("");
+            day.AssertPartOneResult("8");
+            day.AssertPartTwoResult("2286");
         }
 
         [Test]
