@@ -6,7 +6,7 @@ namespace AdventOfCode.Common
     {
         public static void AddRange<T>(this HashSet<T> set, IEnumerable<T> elements)
         {
-            foreach(var e in elements)
+            foreach (var e in elements)
             {
                 set.Add(e);
             }
@@ -58,6 +58,17 @@ namespace AdventOfCode.Common
         {
             var matches = regex.Matches(input);
             return matches.Single().Groups.Values.Skip(1).ToArray();
+        }
+
+        public static IEnumerable<int> AllIndexesOf(this string value, string searchValue)
+        {
+            int index = value.IndexOf(searchValue);
+
+            while (index != -1)
+            {
+                yield return index;
+                index = value.IndexOf(searchValue, index + searchValue.Length);
+            }
         }
     }
 }
